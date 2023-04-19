@@ -8,6 +8,8 @@ from modules.csv_utils import SocialRow, CsvHandler
 
 
 class WidgetManager:
+    """This class manages the widgets and the logic to interact with the widgets"""
+
     def __init__(self, csv_handler: CsvHandler) -> None:
         self.csv_handler = csv_handler
         self._create_widgets()
@@ -18,15 +20,15 @@ class WidgetManager:
         self.instagram = widgets.IntText(description='instagram : ')
         self.tiktok = widgets.IntText(description='tiktok : ')
         # get the date value of the widgets
-        self.datePicker = widgets.DatePicker()
-        self.datePicker.value = datetime.date.today()
+        self.date_picker = widgets.DatePicker()
+        self.date_picker.value = datetime.date.today()
 
         self.comment_area = widgets.Textarea(description='comment : ')
         self.button = widgets.Button(description="Write CSV")
         self.output = widgets.Output(layout={'border': '1px solid black'})
 
         self.my_widgets = widgets.VBox(
-            [self.datePicker, self.twitter, self.instagram, self.tiktok, self.comment_area, self.button, self.output])
+            [self.date_picker, self.twitter, self.instagram, self.tiktok, self.comment_area, self.button, self.output])
 
         self.button.on_click(self._add_new_row)
 
@@ -36,12 +38,12 @@ class WidgetManager:
         self.pd_df = pd.DataFrame(data[1:], columns=headers)
 
     def _write_csv(self) -> None:
-        row = SocialRow(self.datePicker.value, self.twitter.value,
+        row = SocialRow(self.date_picker.value, self.twitter.value,
                         self.instagram.value, self.tiktok.value, self.comment_area.value).to_dict()
         self.csv_handler.add_row(row)
 
     def _get_widgets_values(self) -> dict:
-        return SocialRow(self.datePicker.value, self.twitter.value, self.instagram.value, self.tiktok.value, self.comment_area.value).to_dict()
+        return SocialRow(self.date_picker.value, self.twitter.value, self.instagram.value, self.tiktok.value, self.comment_area.value).to_dict()
 
     def _get_widgets_values_as_string(self) -> str:
         values = self._get_widgets_values()
