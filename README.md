@@ -16,4 +16,4 @@ conda 22.9.0
     └── wigets.py
 ```
 
-![](./assets/image.png)
+![](./assets/output.gif)
